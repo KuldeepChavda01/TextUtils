@@ -75,7 +75,7 @@ export default function TextForm(props) {
             style={mode === "light" ? themeLight : themeDark}
           ></textarea>
         </div>
-        <div className="d-flex justify-content-between flex-wrap">
+        <div className="btn-wrapper d-flex justify-content-center flex-wrap">
           <button
             className={`btn btn-${
               mode === "light" ? "primary" : "secondary"
