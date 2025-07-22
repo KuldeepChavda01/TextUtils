@@ -1,64 +1,50 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
 
-export default function Navbar(props) {
+const Navbar = (props) => {
+  const { mode, toggleMode } = props;
   return (
     <>
-      <nav
-        className="navbar navbar-expand-lg bg-body-tertiary"
-        data-bs-theme={props.mode}
-      >
-        <div className="container-fluid">
-          <NavLink className="navbar-brand" to="/">
-            TextUtils
-          </NavLink>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+      <nav className={`navbar bg-${mode === "light" ? "light" : "darkGray"}`}>
+        <h2 className={`logo text-${mode === "light" ? "primary" : "light"}`}>
+          TextUtils
+        </h2>
+        <ul className="navItems">
+          <li className="listItem">
+            <NavLink
+              className={`navLink text-${
+                mode === "light" ? "primary" : "light"
+              }`}
+              to="/"
+            >
+              Home
+            </NavLink>
+          </li>
+          <li className="listItem">
+            <NavLink
+              className={`navLink text-${
+                mode === "light" ? "primary" : "light"
+              }`}
+              to="/about"
+            >
+              About
+            </NavLink>
+          </li>
+          <div
+            className={`switch bg-${mode === "light" ? "primary" : "white"}`}
           >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <NavLink className="nav-link active" aria-current="page" to="/">
-                  Home
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/about">
-                  About
-                </NavLink>
-              </li>
-            </ul>
-            {/* Switch */}
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                role="switch"
-                id="switchCheckDefault"
-                onClick={() => {
-                  props.toggleMode();
-                }}
-              />
-              <label
-                className={`form-check-label text-${
-                  props.mode === "light" ? "dark" : "light"
-                }`}
-                htmlFor="switchCheckDefault"
-              >
-                Dark Mode
-              </label>
+            <input type="checkbox" onClick={toggleMode} />
+            <div>
+              {mode === "light" ? (
+                <i className="fa-solid fa-moon text-secondary"></i>
+              ) : (
+                <i className="fa-regular fa-sun"></i>
+              )}
             </div>
           </div>
-        </div>
+        </ul>
       </nav>
     </>
   );
-}
+};
+
+export default Navbar;

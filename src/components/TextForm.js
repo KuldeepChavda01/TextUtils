@@ -4,16 +4,6 @@ export default function TextForm(props) {
   const { mode, showAlert } = props;
   const [text, setText] = useState("");
 
-  const themeLight = {
-    backgroundColor: "white",
-    color: "black",
-  };
-
-  const themeDark = {
-    backgroundColor: "#2B3035",
-    color: "white",
-  };
-
   const handleOnChange = (event) => {
     setText(event.target.value);
   };
@@ -21,30 +11,30 @@ export default function TextForm(props) {
   const handleUpperCase = () => {
     const newText = text.toUpperCase();
     setText(newText);
-    showAlert("Converted to uppercase", "success");
+    showAlert("Converted to uppercase", "Success");
   };
 
   const handleLowerCase = () => {
     const newText = text.toLowerCase();
     setText(newText);
-    showAlert("Converted to lowercase", "success");
+    showAlert("Converted to lowercase", "Success");
   };
 
   const handleCopy = () => {
     navigator.clipboard.writeText(text);
-    showAlert("Copied to clipboard", "success");
+    showAlert("Copied to clipboard", "Success");
   };
 
   const handleClear = () => {
     const newText = "";
     setText(newText);
-    showAlert("Text cleared", "success");
+    showAlert("Text cleared", "Success");
   };
 
   const handleRemoveSpaces = () => {
     const newText = text.trim().split(/[ ]+/).join(" ");
     setText(newText);
-    showAlert("Extra spaces removed", "success");
+    showAlert("Extra spaces removed", "Success");
   };
 
   const handleCapitalize = () => {
@@ -56,28 +46,38 @@ export default function TextForm(props) {
       })
       .join(" ");
     setText(capitalizedText);
-    showAlert("Converted to capitalized", "success");
+    showAlert("Converted to capitalized", "Success");
   };
+
+  const words = text.split(/\s+/).filter((word) => {
+    return word.length !== 0;
+  });
+
+  const timeInMinutes = words.length * 0.008;
+
+  const seconds = Math.round(timeInMinutes * 60);
+
+  const minutes = Math.floor(seconds / 60);
 
   return (
     <>
-      <div className="container">
-        <h1 className={`text-${mode === "light" ? "dark" : "light"} mb-2`}>
-          Text to Manipulate
-        </h1>
-        <div className="mb-3">
-          <textarea
-            className="form-control text-box"
-            id="myBox"
-            rows="8"
-            onChange={handleOnChange}
-            value={text}
-            style={mode === "light" ? themeLight : themeDark}
-          ></textarea>
-        </div>
-        <div className="btn-wrapper d-flex justify-content-center flex-wrap">
+      <h1
+        className={`heading text-${mode === "light" ? "secondary" : "light"}`}
+      >
+        Text to Manipulate
+      </h1>
+      <div className="mb-3">
+        <textarea
+          className={`text-box box-${mode === "light" ? "light" : "dark"}`}
+          rows="8"
+          onChange={handleOnChange}
+          value={text}
+        ></textarea>
+      </div>
+      <div className={`btn-wrapper box-${mode === "light" ? "light" : "dark"}`}>
+        <div className="conversions">
           <button
-            className={`btn btn-${
+            className={`btn cBtn btn-${
               mode === "light" ? "primary" : "secondary"
             } mx-2 my-1`}
             onClick={handleUpperCase}
@@ -86,25 +86,7 @@ export default function TextForm(props) {
             Convert to uppercase
           </button>
           <button
-            className={`btn btn-${
-              mode === "light" ? "primary" : "secondary"
-            } mx-2 my-1`}
-            onClick={handleCapitalize}
-            disabled={text.length === 0}
-          >
-            Convert to capitalized
-          </button>
-          <button
-            className={`btn btn-${
-              mode === "light" ? "primary" : "secondary"
-            } mx-2 my-1`}
-            onClick={handleRemoveSpaces}
-            disabled={text.length === 0}
-          >
-            Remove Extra Spaces
-          </button>
-          <button
-            className={`btn btn-${
+            className={`btn cBtn btn-${
               mode === "light" ? "primary" : "secondary"
             } mx-2 my-1`}
             onClick={handleLowerCase}
@@ -113,7 +95,27 @@ export default function TextForm(props) {
             Convert to lowercase
           </button>
           <button
-            className={`btn btn-${
+            className={`btn cBtn btn-${
+              mode === "light" ? "primary" : "secondary"
+            } mx-2 my-1`}
+            onClick={handleCapitalize}
+            disabled={text.length === 0}
+          >
+            Convert to capitalized
+          </button>
+          <button
+            className={`btn cBtn btn-${
+              mode === "light" ? "primary" : "secondary"
+            } mx-2 my-1`}
+            onClick={handleRemoveSpaces}
+            disabled={text.length === 0}
+          >
+            Remove extra spaces
+          </button>
+        </div>
+        <div className="functionals">
+          <button
+            className={`btn fBtn btn-${
               mode === "light" ? "primary" : "secondary"
             } mx-2 my-1`}
             onClick={handleCopy}
@@ -122,7 +124,7 @@ export default function TextForm(props) {
             Copy Text
           </button>
           <button
-            className={`btn btn-${
+            className={`btn fBtn btn-${
               mode === "light" ? "primary" : "secondary"
             } mx-2 my-1`}
             onClick={handleClear}
@@ -133,26 +135,26 @@ export default function TextForm(props) {
         </div>
       </div>
       <div
-        className={`container my-3 text-${mode === "light" ? "dark" : "light"}`}
+        className={`details text-${mode === "light" ? "secondary" : "light"}`}
       >
-        <h1>Your Text Summary</h1>
-        <p>
-          {
-            text.split(/\s+/).filter((element) => {
-              return element.length !== 0;
-            }).length
-          }{" "}
-          words and {text.length} characters
-        </p>
-        <p>
-          {0.008 *
-            text.split(" ").filter((element) => {
-              return element.length !== 0;
-            }).length}{" "}
-          Minutes to read
-        </p>
-        <h2>Preview</h2>
-        <p>{text.length === 0 ? "Nothing to preview" : text}</p>
+        <div className={`summary box-${mode === "light" ? "light" : "dark"}`}>
+          <h2>Your Text Summary</h2>
+          <p>
+            {
+              text.split(/\s+/).filter((element) => {
+                return element.length !== 0;
+              }).length
+            }{" "}
+            words and {text.length} characters
+          </p>
+          <p>
+            {minutes} Min {seconds} Sec to read
+          </p>
+        </div>
+        <div className={`preview box-${mode === "light" ? "light" : "dark"}`}>
+          <h2>Preview</h2>
+          <p>{text.length === 0 ? "Nothing to preview" : text}</p>
+        </div>
       </div>
     </>
   );

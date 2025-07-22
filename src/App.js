@@ -15,18 +15,18 @@ function App() {
     setAlert({ message: message, type: type });
     setTimeout(() => {
       setAlert(null);
-    }, 1500);
+    }, 2000);
   };
 
   const toggleMode = () => {
     if (mode === "light") {
       setMode("dark");
-      document.body.style.backgroundColor = "#212121";
-      showAlert("Dark mode has been enabled", "success");
+      document.body.style.backgroundColor = "#202225";
+      showAlert("Dark mode has been enabled", "Theme Change");
     } else {
       setMode("light");
-      document.body.style.backgroundColor = "white";
-      showAlert("Light mode has been enabled", "success");
+      document.body.style.backgroundColor = "#C7D3D4";
+      showAlert("Light mode has been enabled", "Theme Change");
     }
   };
 
@@ -34,7 +34,7 @@ function App() {
     <>
       <Router>
         <Navbar mode={mode} toggleMode={toggleMode} />
-        <Alert alert={alert} />
+        <Alert alert={alert} mode={mode} />
         <div className="container">
           <Routes>
             <Route
